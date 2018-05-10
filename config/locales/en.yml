@@ -3,3 +3,7 @@
 
 en:
   hello: "Hello world"
+  spree:
+    merchant_name: Merchant Name
+    client_id: Client ID
+    client_secret: Client Secret

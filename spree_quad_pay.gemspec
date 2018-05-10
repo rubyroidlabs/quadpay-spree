@@ -3,12 +3,12 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_quad_pay'
   s.version     = '3.1.12'
-  s.summary     = 'TODO: Add gem summary here'
-  s.description = 'TODO: Add (optional) gem description here'
+  s.summary     = 'Add gem summary here'
+  s.description = 'Add (optional) gem description here'
   s.required_ruby_version = '>= 2.1.0'
 
-  # s.author    = 'You'
-  # s.email     = 'you@example.com'
+  s.author    = 'Nspired Tech'
+  s.email     = 'admin@nspired-tech.com'
   # s.homepage  = 'http://www.spreecommerce.com'
   s.license = 'BSD-3'
 
@@ -27,5 +27,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'sass-rails', '~> 5.0.0'
   s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'simplecov'
-  s.add_development_dependency 'sqlite3'
+  s.add_development_dependency 'pg'
 end

@@ -4,6 +4,10 @@ module SpreeQuadPay
     isolate_namespace Spree
     engine_name 'spree_quad_pay'
 
+    initializer "spree.gateway.payment_methods", :after => "spree.register.payment_methods" do |app|
+      app.config.spree.payment_methods << Spree::BillingIntegration::QuadPayCheckout
+    end
+
     # use rspec for tests
     config.generators do |g|
       g.test_framework :rspec

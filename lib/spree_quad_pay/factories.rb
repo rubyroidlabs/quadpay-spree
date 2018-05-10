@@ -1,6 +1,15 @@
 FactoryGirl.define do
-  # Define your Spree extensions Factories within this file to enable applications, and other extensions to use and override them.
-  #
-  # Example adding this to your spec_helper will load these Factories for use:
-  # require 'spree_quad_pay/factories'
+  factory :quad_pay_checkout, class: Spree::BillingIntegration::QuadPayCheckout do
+    name 'QuadPayCheckout'
+    type 'Spree::BillingIntegration::QuadPayCheckout'
+    description 'QuadPayCheckout'
+    active true
+    display_on 'both'
+    preferences Hash.new(
+      client_id: 'client_id', 
+      client_secret: 'client_secret', 
+      server: 'test', 
+      test_mode: 'true'
+    )
+  end
 end
