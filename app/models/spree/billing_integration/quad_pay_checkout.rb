@@ -157,6 +157,10 @@ class Spree::BillingIntegration::QuadPayCheckout < Spree::BillingIntegration
     items
   end
 
+  def actions
+    %w{void credit}
+  end
+
   private
     def quadpay_api
       @quadpay_api ||=
