@@ -1,102 +1,117 @@
 SpreeQuadPay
 ============
 
-spree_quad_pay is a gem to support Spree E-commerce with Quad Pay (https://www.quadpay.com) payment
+spree_quad_pay is a gem to support Spree E-commerce with [Quad Pay](https://www.quadpay.com) payment
 
 ## Installation
 
 1. Add this extension to your Gemfile with this line:
-  ```ruby
-  gem 'spree_quad_pay', github: '[your-github-handle]/spree_quad_pay', branch: '3-1-stable'
-  ```
 
-  The `branch` option is important: it must match the version of Spree you're using.
-  For example, use `3-1-stable` if you're using Spree `3-1-stable` or any `3.1.x` version.
+    ```
+    gem 'spree_quad_pay', github: '[your-github-handle]/spree_quad_pay', branch: '3-1-stable'`
+    ```
+
+    **The `branch` option is important: it must match the version of Spree you're using.**
+
+    **For example, use `3-1-stable` if you're using Spree `3-1-stable` or any `3.1.x` version.**
 
 2. Install the gem using Bundler:
-  ```ruby
-  bundle install
-  ```
+
+    ```
+    bundle install
+    ```
 
 3. Copy & run migrations
-  ```ruby
-  bundle exec rails g spree_quad_pay:install
-  ```
+
+    ```
+    bundle exec rails g spree_quad_pay:install
+    ```
 
 ## Setup Spree
 1. Update Quadpay transaction status (optional): To avoid inconsistency between QuadPay and Spree Orders, we need to sync the Order statuses using 1 of these methods:
 
-  + Using cronjob: The gem generator will generate config/schedule.rb and config it to run every 5 minutes. Run this command to update job (this would require gem "whenever" installed):
+    * Using cronjob: The gem generator will generate config/schedule.rb and config it to run every 5 minutes. Run this command to update job (this would require gem "whenever" installed):
 
-  ```ruby
-  bundle exec whenever --update-crontab
-  ```
+      ```
+      bundle exec whenever --update-crontab
+      ```
 
-  + Using rake task scheduler: Heroku, for example, doesn't support cronjob. Therefore, you can use rake task combine with Heroku Scheduler:
+    * Using rake task scheduler: Heroku, for example, doesn't support cronjob. Therefore, you can use rake task combine with Heroku Scheduler:
+      
+      ```
+      rake quad_pay_tasks:sync_orders
+      ```
 
-  ```bash
-  rake quad_pay_tasks:sync_orders
-  ```
 
-2. Create QuadPay Payment Method
-  + Login into Admin Dashboard and go to Configurations > Payment Method, click on button `New Payment Method`,
+2. Create QuadPay Payment Method:
 
-  + On new page, at field `PROVIDER` we will choose `Spree::BillingIntegration::QuadPayCheckout` and fill data to Name and Description.
-  
-  + Click on `Create` button to create Quad Pay payment method.
+    * Login into Admin Dashboard and go to Configurations > Payment Method, click on button `New Payment Method`.
+
+    * On new page, at field `PROVIDER` we will choose `Spree::BillingIntegration::QuadPayCheckout` and fill data to Name and Description.
+
+    * Click on `Create` button to create Quad Pay payment method.
+
 
 3. Setup QuadPay API keys and Settings
-  + Go to Configurations > Quad Pay Settings and fill necessary infomation below:
 
-  ```yaml
+    * Go to Configurations > Quad Pay Settings and fill necessary infomation below:
+
+    ```
     Site URL: Your domain URL. This URL is used for QuadPay callback calls.
-    Merchant: Name: Merchant Name provided by QuadPay.
+    ```
+    ```
+    Merchant Name: Merchant Name provided by QuadPay.
+    ```
+    ```
     Client ID: Client ID provided by QuadPay.
-    Client Secret: Client Secret provided by QuadPay.
+    ```
+    ```
     Min Amount: The Order minimum amount to qualify for QuadPay Payment. User cannot select QuadPay Payment Method if the Order's total lower than this minimum amount.
+    ```
+    ```
     Max Amount: The Order maximim amount to qualify for QuadPay Payment. User cannot select QuadPay Payment Method if the Order's total greater than this maximum amount.
-    Display Widget At Product Page *: Display QuadPay widget on Product Page.
-    Display Widget At Cart Page *: Display QuadPay widget on Cart Page.
+    ```
+    ```
+    Display Widget At Product Page: Display QuadPay widget on Product Page.
+    ```
+    ```
+    Display Widget At Cart Page: Display QuadPay widget on Cart Page.
+    ```
+    ```
     Test Mode: Toggle Test Mode or Live Mode
-  ```
+    ```
 
 4. Restart your server
 
-  If your server was running, restart it so that it can find the assets properly.
+    * If your server was running, restart it so that it can find the assets properly.
 
 ## Usage
 1. The gem provide helper method "quad_pay_widget" to generate the QuadPay widget wherever you want.
 
-  ```ruby
-  <%= quad_pay_widget(type, amount) %>
-  ```
+    ```
+    quad_pay_widget(type, amount)
+    ```
 
-2. The gem provide rake task to sync QuadPay Orders with Spree Orders. 
+2. The gem provide rake task to sync QuadPay Orders with Spree Orders.
 
-  ```bash
-  rake quad_pay_tasks:sync_orders
-  ```
+    ```
+    rake quad_pay_tasks:sync_orders
+    ```
 
-3. By default, the gem will provide Refund for Order cancel and Return Authorization. You can also use explore the built in "Spree::BillingIntegration::QuadPayCheckout" object to issue any QuadPay command supported:
+3. By default, the gem will provide Refund for Order cancel and Return Authorization. You can also use explore the built in `Spree::BillingIntegration::QuadPayCheckout` object to issue any QuadPay command supported:
 
-  + create_order: create QuadPay Order.
-
-  + find_order: find QuadPay Order based on token provided.
-
-  + refund: refund with QuadPay payment based on the Payment's response code.
-
-  + credit: partial refund back to User.
-
-  + cancel: full refund.
+    * create_order: create QuadPay Order.
+    * find_order: find QuadPay Order based on token provided.
+    * refund: refund with QuadPay payment based on the Payment's response code.
+    * credit: partial refund back to User.
+    * cancel: full refund.
 
 ## Testing
 
 First bundle your dependencies, then run `rake`. `rake` will default to building the dummy app if it does not exist, then it will run specs. The dummy app can be regenerated by using `rake test_app`.
 
-```shell
-bundle
-bundle exec rake
-```
+    bundle
+    bundle exec rake
 
 When testing your applications integration with this extension you may use it's factories.
 Simply add this require statement to your spec_helper:
