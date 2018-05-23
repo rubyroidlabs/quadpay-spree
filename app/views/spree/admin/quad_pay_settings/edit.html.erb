@@ -1,0 +1,35 @@
+<% content_for :page_title do %>
+  <%= Spree.t(:quad_pay_settings) %>
+<% end %>
+
+<%= form_tag admin_quad_pay_settings_path, method: :put do %>
+  <div id="preferences" data-hook>
+    <fieldset class="quad_pay no-border-top">
+      <%= fields_for :quad_pay do |f| %>
+        <div class="row">
+          <div class="col-md-8">
+            <% if @preferences_security.any? %>
+              <%
+              @preferences_security.each do |key|
+                type = Spree::Config.preference_type(key)
+              %>
+                <div class="checkbox">
+                  <%= label_tag key do %>
+                    <div class="text"><%= Spree.t(key) %></div>
+                    <%= preference_field_tag(key, Spree::Config[key], type: type) %>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="form-actions" data-hook="buttons">
+        <%= button Spree.t('actions.update'), 'save' %>
+        <span class="or"><%= Spree.t(:or) %></span>
+        <%= button_link_to Spree.t('actions.cancel'), edit_admin_quad_pay_settings_path, icon: 'delete' %>
+      </div>
+    </fieldset>
+  </div>
+<% end %>

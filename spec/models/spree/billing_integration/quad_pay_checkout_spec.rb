@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::BillingIntegration::QuadPayCheckout do
+describe 'Spree::BillingIntegration::QuadPayCheckout', type: :model do
   # before :all do
   #   @quad_pay_checkout =
   #     Spree::BillingIntegration::QuadPayCheckout.new(
@@ -22,7 +22,7 @@ describe Spree::BillingIntegration::QuadPayCheckout do
     # expect(Spree::BillingIntegration::QuadPayCheckout.new.source_required?).to eq false
   end
 
-  it '#auto_capture??' do
+  it '#auto_capture?' do
     # expect(Spree::BillingIntegration::QuadPayCheckout.new.source_required?).to eq false
   end
 end

@@ -1,0 +1,12 @@
+<p>
+  <label for="">Payment Response</label>  
+  <br>
+  <% payment.log_entries.order(created_at: :desc).each do |log_entry| %>
+    <label for=""><%= "Log ##{log_entry.id} - Created At #{log_entry.created_at}" %></label>
+    <% details = log_entry.parsed_details.to_json %>
+    <pre><%= raw(JSON.pretty_generate(JSON.parse(details))) rescue details %></pre> 
+    <br>
+    <hr>
+    <br>
+  <% end %>
+</p>

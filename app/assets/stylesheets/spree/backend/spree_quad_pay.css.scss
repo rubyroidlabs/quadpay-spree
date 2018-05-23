@@ -1,0 +1,20 @@
+fieldset.quad_pay {
+  .checkbox {
+    margin-bottom: 25px;
+
+    label {
+      width: 100%;
+      
+      .text {
+        margin-bottom: 5px;
+      }
+
+      [type=checkbox] {
+        margin-top: -18px;
+        display: inline-block;
+        width: 100%;
+        margin-left: 245px;
+      }
+    }
+  }
+}

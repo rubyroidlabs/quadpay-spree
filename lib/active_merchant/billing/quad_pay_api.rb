@@ -58,10 +58,10 @@ module ActiveMerchant
           http.request(request)
         end
 
-        OpenStruct.new(code: response.code.to_i, body: response.body.present? ? JSON.parse(response.body) : {})
+        body_json = (response.body.present? ? JSON.parse(response.body) : {}) rescue {'msg' => response.body}
+        OpenStruct.new(code: response.code.to_i, body: body_json)
       end
-
-
+      
       def access_token
         return @access_token if @access_token.present?
 

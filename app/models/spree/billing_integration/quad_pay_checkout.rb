@@ -3,29 +3,82 @@ require 'active_merchant/billing/quad_pay_api'
 class Spree::BillingIntegration::QuadPayCheckout < Spree::BillingIntegration
   include ActionView::Helpers::NumberHelper
 
-  preference :site_url, :string, default: 'https://your-website.com/'
-  preference :merchant_name, :string
-  preference :client_id, :string
-  preference :client_secret, :string
+  def configuration
+    @configuration ||= quadpay_api.send_request('get', 'configuration', {})
+  end
 
   def create_order(order)
-    quadpay_api.send_request('post', 'order', build_order_params(order))
+    resp = quadpay_api.send_request('post', 'order', build_order_params(order))
+    return nil unless [200, 201].include?(resp.code)
+    resp['body']
   end
-  
+
   def find_order(token)
-    quadpay_api.send_request('get', 'order', token)
+    quadpay_api.send_request('get', "order?token=#{token}", {})
   end
 
   def purchased
+    ActiveMerchant::Billing::Response.new(true, {})
   end
 
   def authorize
+    ActiveMerchant::Billing::Response.new(true, {})
   end
 
   def capture
+    ActiveMerchant::Billing::Response.new(true, {})
   end
 
-  def void
+  def refund(money, response, options = {})
+    @payment = Spree::Payment.find_by(response_code: response)
+    @qp_order_id = @payment.quad_pay_orders.last.try(:qp_order_id) if @payment
+    if @payment && @qp_order_id
+      refund_id = "Refund-#{@payment.order.number}-#{@payment.number}-#{Time.current.strftime('%Y%m%d%H%M%S')}"
+      resp =
+        quadpay_api.send_request(
+          'post',
+          "order/#{@qp_order_id}/refund",
+          options.reverse_merge({
+            "requestId" => refund_id,
+            "merchantRefundReference" => refund_id,
+            "amount" => number_to_currency(money, unit: '')
+          })
+        )
+
+      if resp.code == 200
+        ActiveMerchant::Billing::Response.new(
+          true,
+          { message: resp['body'] },
+          {},
+          authorization: refund_id
+        )
+      else
+        ActiveMerchant::Billing::Response.new(
+          false,
+          { message: resp['body'] },
+          { 'message' => resp['body']['msg'] },
+          authorization: refund_id
+        )
+      end
+    else
+      messages = []
+      messages << Spree.t(:quadpay_payment_not_found) unless @payment
+      messages << Spree.t(:quadpay_order_not_found) unless @qp_order_id
+      ActiveMerchant::Billing::Response.new(false, {}, { 'message' => messages.join(' ') })
+    end
+  end
+
+  def credit(money, response, options = {})
+    refund((money/100.0).to_f, response)
+  end
+
+  def void(response)
+    ActiveMerchant::Billing::Response.new(true, {})
+  end
+
+  def cancel(response)
+    @payment = Spree::Payment.find_by(response_code: response)
+    refund(@payment.amount.to_f, response)
   end
 
   def source_required?
@@ -34,12 +87,6 @@ class Spree::BillingIntegration::QuadPayCheckout < Spree::BillingIntegration
 
   def auto_capture?
     true
-  end
-
-  def redirect_url(order)
-    resp = create_order(order)
-    return nil unless [200, 201].include?(resp.code)
-    resp['body']['redirectUrl']
   end
 
   def build_order_params(order)
@@ -71,8 +118,8 @@ class Spree::BillingIntegration::QuadPayCheckout < Spree::BillingIntegration
       },
       'items': line_item_as_json(order),
       'merchant': {
-        'redirectConfirmUrl': "#{site_url}/#{order.number}/quadpay_cancel",
-        'redirectCancelUrl': "#{site_url}/#{order.number}/quadpay_confirm"
+        'redirectConfirmUrl': "#{site_url}/orders/quadpay_confirm",
+        'redirectCancelUrl': "#{site_url}/orders/quadpay_cancel"
       },
       'merchantReference': order.number,
       'taxAmount': number_to_currency(order.tax_total, unit: ''),
@@ -81,8 +128,8 @@ class Spree::BillingIntegration::QuadPayCheckout < Spree::BillingIntegration
   end
 
   def site_url
-    site_url = preferences[:site_url]
-    3.times { site_url.gsub!(/^\/|\/$/, '') }
+    site_url = Spree::Config.quad_pay_site_url
+    3.times { site_url.gsub!(/^\/|\/$/, '') } # ensure never have the splash of the end of url
     site_url
   end
 
@@ -90,7 +137,7 @@ class Spree::BillingIntegration::QuadPayCheckout < Spree::BillingIntegration
     items =
       order.line_items.map do |line_item|
         {
-          description: "#{line_item.variant.descriptive_name}",
+          description: line_item.variant.descriptive_name,
           name: line_item.variant.product.name,
           sku: line_item.variant.sku,
           quantity: line_item.quantity,
@@ -114,9 +161,9 @@ class Spree::BillingIntegration::QuadPayCheckout < Spree::BillingIntegration
     def quadpay_api
       @quadpay_api ||=
         ActiveMerchant::Billing::QuadPayApi.new(
-          preferences[:client_id],
-          preferences[:client_secret],
-          preferences[:test_mode]
+          Spree::Config.quad_pay_client_id,
+          Spree::Config.quad_pay_client_secret,
+          Spree::Config.quad_pay_test_mode
         )
     end
 end

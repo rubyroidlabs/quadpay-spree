@@ -1,0 +1,9 @@
+<!-- insert_after '.warning.cart-total' -->
+<% if current_order %>
+  <tr class="cart-quad-pay-widget">
+    <td colspan="5" align="right">
+      <%= quad_pay_widget('cart', current_order.total) %>
+    </td>
+    <td></td>
+  </tr>
+<% end %>

@@ -1,3 +1,22 @@
-#quadpay-logo-payment-method {
-  margin: 0px 0 20px 5px;
+#quadpay-payment-method-option-wrapper {
+  position: relatived;
+  margin-bottom: 30px;
+
+  #quadpay-logo-payment-method {
+    margin: 0px 0 0px 5px;
+  }
+
+  #quadpay-text-payment-method {
+    margin: -15px 0 0px 5px;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: sans-serif;
+    color: #191919;
+  }
+
+  #quadpay-text-payment-method-cc-accepted {
+    position: absolute;
+    top: 30px;
+    right: 5px;
+  }
 }

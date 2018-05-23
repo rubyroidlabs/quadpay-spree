@@ -1,7 +1,7 @@
 module SpreeQuadPay
   module Generators
     class InstallGenerator < Rails::Generators::Base
-
+      source_root File.expand_path("../templates", __FILE__)
       class_option :auto_run_migrations, :type => :boolean, :default => false
 
       def add_javascripts
@@ -16,6 +16,10 @@ module SpreeQuadPay
 
       def add_migrations
         run 'bundle exec rake railties:install:migrations FROM=spree_quad_pay'
+      end
+
+      def copy_whenever_schedule
+        copy_file 'schedule.rb', 'config/schedule.rb'
       end
 
       def run_migrations

@@ -1,9 +1,19 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
-  hello: "Hello world"
   spree:
-    merchant_name: Merchant Name
-    client_id: Client ID
-    client_secret: Client Secret
+    quad_pay_site_url: Site URL
+    quad_pay_merchant_name: Merchant Name
+    quad_pay_client_id: Client ID
+    quad_pay_test_mode: Test Mode?
+    quad_pay_client_secret: Client Secret
+    quad_pay_min_amount: Order Min Amount
+    quad_pay_max_amount: Order Max Amount
+    quad_pay_display_widget_at_product_page: Display Widget At Product Page 
+    quad_pay_display_widget_at_cart_page: Display Widget At Cart Page 
+    quad_pay_settings: Quad Pay Settings
+    quad_pay_checkout_error: Checkout with QuadPay payment error. Please try again.
+    quadpay_payment_cancelled: Your payment was cancelled.
+    quadpay_payment_invalid: QuadPay payment invalid.
+    quadpay_payment_success: Your payment was paid successfully.
+    quadpay_payment_fail: "Order #%{number} is something went wrong. Please contact to administrator."
+    quadpay_payment_not_found: "QuadPay payment not found."
+    quadpay_order_not_found: "QuadPay order not found."

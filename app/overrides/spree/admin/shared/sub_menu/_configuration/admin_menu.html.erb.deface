@@ -1,0 +1,2 @@
+<!-- insert_after "erb[loud]:contains('configurations_sidebar_menu_item(Spree.t(:general_setting')" -->
+<%= configurations_sidebar_menu_item(Spree.t(:quad_pay_settings), spree.edit_admin_quad_pay_settings_path) if can? :manage, Spree::Config %>
