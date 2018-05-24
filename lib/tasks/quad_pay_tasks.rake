@@ -6,7 +6,8 @@ namespace :quad_pay_tasks do
         Spree::Payment.
           where(payment_method_id: qpms.ids).
           joins(:order).
-          where("spree_orders.completed_at IS NULL and spree_payments.state IN (?)", %w(pending checkout processing))
+          where.not("spree_payments.state IN (?)", %w(failed completed))
+          where('spree_payments.created_at >= ?', 15.minutes.ago)
 
       quad_pay_payments.each do |payment|
         order = payment.order
@@ -16,20 +17,26 @@ namespace :quad_pay_tasks do
           when 'Created'
             # No action
           when 'Approved'
+            payment.update(state: 'processing')
             payment.complete!
             # Force complete order
             while order.next; end
           when 'Declined'
-            payment.invalidate
+            set_payment_fail(payment)
           when 'Abandoned'
-            payment.invalidate
+            set_payment_fail(payment)
           else
-            payment.invalidate if payment.created_at < 15.minute.ago
+            set_payment_fail(payment) if payment.created_at < 15.minute.ago
           end
         else
-          payment.invalidate if payment.created_at < 15.minute.ago
+          set_payment_fail(payment) if payment.created_at < 15.minute.ago
         end
       end
     end
+  end
+
+  def set_payment_fail(payment)
+    payment.update(state: 'processing')
+    payment.failure
   end
 end

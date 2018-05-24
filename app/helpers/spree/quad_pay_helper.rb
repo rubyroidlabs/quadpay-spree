@@ -9,10 +9,10 @@ module Spree
             when 'cart'
               Spree::Config.quad_pay_display_widget_at_cart_page
             end
-
         if display_widget
-          url = "https://widgets.quadpay.com/#{Spree::Config.quad_pay_merchant_name}/quadpay-widget-0.1.0.js?type=calculator&min=#{Spree::Config.quad_pay_min_amount}&max=#{Spree::Config.quad_pay_max_amount}&amount=#{amount.to_f}"
-          widget_html(amount, url).html_safe
+          payment_amount = (amount / 4.0 * 100).to_i / 100.0
+          url = "https://widgets.quadpay.com/#{Spree::Config.quad_pay_merchant_name}/quadpay-widget-0.1.0.js?type=calculator&min=#{Spree::Config.quad_pay_min_amount}&max=#{Spree::Config.quad_pay_max_amount}&amount=#{payment_amount}"
+          widget_html(number_to_currency(payment_amount), url).html_safe
         end
       end
     end

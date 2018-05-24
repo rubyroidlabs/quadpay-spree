@@ -1,2 +1,0 @@
-<!-- insert_after '[data-hook="cart_container"]' -->
-<%= quad_pay_widget('cart', current_order.total) if current_order %>

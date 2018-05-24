@@ -45,21 +45,16 @@ class Spree::BillingIntegration::QuadPayCheckout < Spree::BillingIntegration
           })
         )
 
-      if resp.code == 200
+      ab_rsp =
         ActiveMerchant::Billing::Response.new(
-          true,
+          resp.code == 200,
           { message: resp['body'] },
-          {},
+          { 'message': resp['body']['msg'] },
           authorization: refund_id
         )
-      else
-        ActiveMerchant::Billing::Response.new(
-          false,
-          { message: resp['body'] },
-          { 'message' => resp['body']['msg'] },
-          authorization: refund_id
-        )
-      end
+
+      @payment.log_entries.create(details: ab_rsp.to_yaml)
+      ab_rsp #return
     else
       messages = []
       messages << Spree.t(:quadpay_payment_not_found) unless @payment
@@ -158,7 +153,7 @@ class Spree::BillingIntegration::QuadPayCheckout < Spree::BillingIntegration
   end
 
   def actions
-    %w{void credit}
+    %w{credit}
   end
 
   private

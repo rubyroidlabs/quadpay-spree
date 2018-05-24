@@ -1,2 +1,0 @@
-<!-- insert_after '[data-hook="product_show"]' -->
-<%= quad_pay_widget('product', @product.price) %>
