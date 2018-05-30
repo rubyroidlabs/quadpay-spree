@@ -35,7 +35,6 @@ require 'spree_quad_pay/factories'
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
-  config.include Spree::TestingSupport::Preferences
 
   # Infer an example group's spec type from the file location.
   config.infer_spec_type_from_file_location!

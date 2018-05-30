@@ -5,11 +5,11 @@ RSpec.describe Spree::OrdersController, type: :controller do
     xit 'payment not found'
 
     context 'QP Order find by token' do
-      content 'found' do
+      context 'found' do
         xit 'not redirect'
       end
 
-      content 'not found' do
+      context 'not found' do
         xit 'alert error and redirect to cart page'
       end
     end

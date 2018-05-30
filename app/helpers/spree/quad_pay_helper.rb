@@ -1,6 +1,10 @@
 module Spree
   module QuadPayHelper
     def quad_pay_widget(type, amount)
+      min_amount = Spree::Config.quad_pay_min_amount.to_f
+      max_amount = Spree::Config.quad_pay_max_amount.to_f
+      return unless current_order
+      return if current_order.total.to_f < min_amount || max_amount < current_order.total.to_f
       if qpm = Spree::BillingIntegration::QuadPayCheckout.available_on_front_end.active.first
         display_widget =
           case type
@@ -11,7 +15,7 @@ module Spree
             end
         if display_widget
           payment_amount = (amount / 4.0 * 100).to_i / 100.0
-          url = "https://widgets.quadpay.com/#{Spree::Config.quad_pay_merchant_name}/quadpay-widget-0.1.0.js?type=calculator&min=#{Spree::Config.quad_pay_min_amount}&max=#{Spree::Config.quad_pay_max_amount}&amount=#{payment_amount}"
+          url = "https://widgets.quadpay.com/#{Spree::Config.quad_pay_merchant_name}/quadpay-widget-0.1.0.js?type=calculator&min=#{min_amount}&max=#{max_amount}&amount=#{payment_amount}"
           widget_html(number_to_currency(payment_amount), url).html_safe
         end
       end
