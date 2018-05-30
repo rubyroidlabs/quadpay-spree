@@ -8,7 +8,7 @@ spree_quad_pay is a gem to support Spree E-commerce with [Quad Pay](https://www.
 1. Add this extension to your Gemfile with this line:
 
     ```
-    gem 'spree_quad_pay', github: '[your-github-handle]/spree_quad_pay', branch: '3-1-stable'`
+    gem 'spree_quad_pay', :git => 'https://bitbucket.org/quadpaycode/quadpay.spree.3.git', :branch => '3-1-stable'`
     ```
 
     **The `branch` option is important: it must match the version of Spree you're using.**
@@ -119,12 +119,3 @@ Simply add this require statement to your spec_helper:
 ```ruby
 require 'spree_quad_pay/factories'
 ```
-
-
-## Contributing
-
-If you'd like to contribute, please take a look at the
-[instructions](CONTRIBUTING.md) for installing dependencies and crafting a good
-pull request.
-
-Copyright (c) 2018 [name of extension creator], released under the New BSD License
