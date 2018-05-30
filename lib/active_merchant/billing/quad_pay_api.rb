@@ -39,7 +39,7 @@ module ActiveMerchant
             'https://api.quadpay.com'
           end
       end
-      
+
       def send_request(method_type = 'get', path = '', body = {})
         method_types = {
           'get' => Net::HTTP::Get,
@@ -61,7 +61,7 @@ module ActiveMerchant
         body_json = (response.body.present? ? JSON.parse(response.body) : {}) rescue {'msg' => response.body}
         OpenStruct.new(code: response.code.to_i, body: body_json)
       end
-      
+
       def access_token
         return @access_token if @access_token.present?
 
@@ -79,7 +79,7 @@ module ActiveMerchant
           http.request(request)
         end
 
-        @access_token = JSON.parse(response.body)['access_token'] 
+        @access_token = JSON.parse(response.body)['access_token']
       end
     end
   end
