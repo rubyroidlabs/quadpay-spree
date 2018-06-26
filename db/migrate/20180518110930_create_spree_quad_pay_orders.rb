@@ -1,4 +1,4 @@
-class CreateSpreeQuadPayOrders < ActiveRecord::Migration
+class CreateSpreeQuadPayOrders < ActiveRecord::Migration[4.2]
   def change
     create_table :spree_quad_pay_orders do |t|
       t.integer :payment_id

@@ -8,12 +8,12 @@ spree_quad_pay is a gem to support Spree E-commerce with [Quad Pay](https://www.
 1. Add this extension to your Gemfile with this line:
 
     ```
-    gem 'spree_quad_pay', :git => 'https://bitbucket.org/quadpaycode/quadpay.spree.3.git', :branch => '3-1-stable'`
+    gem 'spree_quad_pay', :git => 'https://bitbucket.org/quadpaycode/quadpay.spree.3.git', :branch => '3-3-stable'`
     ```
 
     **The `branch` option is important: it must match the version of Spree you're using.**
 
-    **For example, use `3-1-stable` if you're using Spree `3-1-stable` or any `3.1.x` version.**
+    **For example, use `3-3-stable` if you're using Spree `3-3-stable` or any `3.3.4` version.**
 
 2. Install the gem using Bundler:
 
@@ -37,7 +37,7 @@ spree_quad_pay is a gem to support Spree E-commerce with [Quad Pay](https://www.
       ```
 
     * Using rake task scheduler: Heroku, for example, doesn't support cronjob. Therefore, you can use rake task combine with Heroku Scheduler:
-      
+
       ```
       rake quad_pay_tasks:sync_orders
       ```

@@ -18,7 +18,7 @@ RSpec.describe Spree::OrdersController, type: :controller do
   context 'GET before_action load_quaypay_payment' do
     it 'payment not found' do
       create_payment('Approved', 'checkout')
-      get :quadpay_confirm, :token => 'rake_qp_token'
+      get :quadpay_confirm, params: { token: 'rake_qp_token' }
       expect(response.code).to eq "302"
       expect(flashes['error']).to eq Spree.t(:quadpay_payment_invalid)
     end
@@ -27,7 +27,7 @@ RSpec.describe Spree::OrdersController, type: :controller do
       context 'found' do
         it 'not redirect' do
           payment = create_payment('Approved', 'checkout')
-          get :quadpay_confirm, :token => 'qp_token'
+          get :quadpay_confirm, params: { token: 'qp_token' }
           payment.reload
           expect(response.code).to eq "302"
           expect(flashes['order_completed']).to eq true
@@ -41,7 +41,7 @@ RSpec.describe Spree::OrdersController, type: :controller do
   context 'GET #quadpay_cancel' do
     it 'cancel payment and redirect to cart page' do
       payment = create_payment('Created', 'checkout')
-      get :quadpay_cancel, :token => 'qp_token'
+      get :quadpay_cancel, params: { token: 'qp_token' }
       payment.reload
       expect(response.code).to eq "302"
       expect(payment.completed?).to eq false
@@ -53,7 +53,7 @@ RSpec.describe Spree::OrdersController, type: :controller do
     context 'QP Order Approved' do
       it 'complete payment, order success and redirect to completed page' do
         payment = create_payment('Approved', 'checkout')
-        get :quadpay_confirm, :token => 'qp_token'
+        get :quadpay_confirm, params: { token: 'qp_token' }
         payment.reload
         expect(response.code).to eq "302"
         expect(flashes['order_completed']).to eq true
@@ -63,7 +63,7 @@ RSpec.describe Spree::OrdersController, type: :controller do
 
       it 'complete payment success, order fail and redirect to payment step page' do
         payment = create_payment('Approved', 'checkout', create(:order))
-        get :quadpay_confirm, :token => 'qp_token'
+        get :quadpay_confirm, params: { token: 'qp_token' }
         payment.reload
         expect(response.code).to eq "302"
         expect(payment.completed?).to eq true
@@ -75,7 +75,7 @@ RSpec.describe Spree::OrdersController, type: :controller do
     context 'QP Order not Approved' do
       it 'alert message and check by cron job another time' do
         payment = create_payment('Created', 'checkout')
-        get :quadpay_confirm, :token => 'qp_token'
+        get :quadpay_confirm, params: { token: 'qp_token' }
         payment.reload
         expect(response.code).to eq "302"
         expect(payment.completed?).to eq false

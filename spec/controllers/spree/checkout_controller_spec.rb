@@ -46,7 +46,7 @@ RSpec.describe Spree::CheckoutController, type: :controller do
 
     context 'not processing' do
       it 'when payment method selected is not Quad Pay' do
-        payment_method = FactoryGirl.create(:simple_credit_card_payment_method)
+        payment_method = FactoryBot.create(:simple_credit_card_payment_method)
         spree_put :update, state: 'payment',
           order: {
             payments_attributes: [{
