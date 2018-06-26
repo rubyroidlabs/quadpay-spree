@@ -22,6 +22,7 @@ module SpreeQuadPay
         preference :quad_pay_max_amount, :float, default: 1500
         preference :quad_pay_display_widget_at_product_page, :boolean, default: true
         preference :quad_pay_display_widget_at_cart_page, :boolean, default: true
+        preference :quad_pay_display_widget_at_checkout_process, :boolean, default: true
         preference :quad_pay_test_mode, :boolean, default: true
       end
     end

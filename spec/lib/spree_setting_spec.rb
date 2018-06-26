@@ -11,6 +11,7 @@ describe 'Quadpay Global setting' do
       Spree::Config.quad_pay_max_amount = 'quad_pay_max_amount'
       Spree::Config.quad_pay_display_widget_at_product_page = false
       Spree::Config.quad_pay_display_widget_at_cart_page = false
+      Spree::Config.quad_pay_display_widget_at_checkout_process = false
       Spree::Config.quad_pay_test_mode = false
     end
 
@@ -23,6 +24,7 @@ describe 'Quadpay Global setting' do
       expect(Spree::Config.quad_pay_max_amount).to eq 'quad_pay_max_amount'
       expect(Spree::Config.quad_pay_display_widget_at_product_page).to eq false
       expect(Spree::Config.quad_pay_display_widget_at_cart_page).to eq false
+      expect(Spree::Config.quad_pay_display_widget_at_checkout_process).to eq false
       expect(Spree::Config.quad_pay_test_mode).to eq false
     end
   end

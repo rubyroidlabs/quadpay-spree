@@ -10,6 +10,7 @@ module QuadPayApiStub
     Spree::Config.quad_pay_max_amount = 'quad_pay_max_amount'
     Spree::Config.quad_pay_display_widget_at_product_page = true
     Spree::Config.quad_pay_display_widget_at_cart_page = true
+    Spree::Config.quad_pay_display_widget_at_checkout_process = true
     Spree::Config.quad_pay_test_mode = true
   end
 

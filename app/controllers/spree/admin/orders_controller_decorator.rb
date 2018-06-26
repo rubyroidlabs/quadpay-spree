@@ -6,6 +6,6 @@ Spree::Admin::OrdersController.class_eval do
     rescue Exception => e
       flash[:error] = e.to_s
     end
-    redirect_to :back
+    redirect_back fallback_location: spree.edit_admin_order_url(@order)
   end
 end

@@ -7,12 +7,13 @@ en:
     quad_pay_client_secret: Client Secret
     quad_pay_min_amount: Order Min Amount
     quad_pay_max_amount: Order Max Amount
-    quad_pay_display_widget_at_product_page: Display Widget At Product Page 
-    quad_pay_display_widget_at_cart_page: Display Widget At Cart Page 
+    quad_pay_display_widget_at_product_page: Display Widget At Product Page
+    quad_pay_display_widget_at_cart_page: Display Widget At Cart Page
+    quad_pay_display_widget_at_checkout_process: Display Widget At Checkout Process
     quad_pay_settings: Quad Pay Settings
     quad_pay_checkout_error: Checkout with QuadPay payment error. Please try again.
-    quadpay_payment_cancelled: Your payment was cancelled.
-    quadpay_payment_invalid: QuadPay payment invalid.
+    quadpay_payment_cancelled: QuadPay checkout cancelled.
+    quadpay_payment_invalid: QuadPay checkout cancelled.
     quadpay_payment_success: Your payment was paid successfully.
     quadpay_payment_fail: "Order #%{number} is something went wrong. Please contact to administrator."
     quadpay_payment_not_found: "QuadPay payment not found."

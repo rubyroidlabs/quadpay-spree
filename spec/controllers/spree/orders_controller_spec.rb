@@ -20,7 +20,7 @@ RSpec.describe Spree::OrdersController, type: :controller do
       create_payment('Approved', 'checkout')
       get :quadpay_confirm, params: { token: 'rake_qp_token' }
       expect(response.code).to eq "302"
-      expect(flashes['error']).to eq Spree.t(:quadpay_payment_invalid)
+      expect(flashes['notice']).to eq Spree.t(:quadpay_payment_invalid)
     end
 
     context 'QP Order find by token' do

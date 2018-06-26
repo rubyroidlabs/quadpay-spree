@@ -12,6 +12,8 @@ module Spree
               Spree::Config.quad_pay_display_widget_at_product_page
             when 'cart'
               Spree::Config.quad_pay_display_widget_at_cart_page
+            when 'checkout'
+              Spree::Config.quad_pay_display_widget_at_checkout_process
             end
         if display_widget
           payment_amount = (amount / 4.0 * 100).to_i / 100.0
@@ -24,7 +26,7 @@ module Spree
     def widget_html(amount, widget_url)
       <<-HTML
         <!-- QuadPay Product Page Widget START -->
-        <div id='quadPayCalculatorWidget' class='yui3-cssreset' style='padding: 7px 0; width: 100%; max-width: 350px; color: black; text-transform: none; box-sizing: inherit;'>
+        <div id='quadPayCalculatorWidget' class='yui3-cssreset' style='min-height: 40px; padding: 7px 0; width: 100%; max-width: 350px; color: black; text-transform: none; box-sizing: inherit;'>
           <img id='quadPayCalculatorWidgetLogo' src='https://assets.quadpay.com/assets/images/quadpay-logo-actually-black-tight-200.png' style='width: 90px; float: right;'>
           <div id='quadPayCalculatorWidgetText' style='position: relative; text-align: left;'>or 4 Interest-Free Payments
             <span id='quadPayCalculatorWidgetTextFromCopy' sytle='margin-right: 10px;'>of <span style='font-weight: bold;'>#{amount}</span></span>

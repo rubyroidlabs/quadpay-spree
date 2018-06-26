@@ -13,6 +13,7 @@ module Spree
           :quad_pay_max_amount,
           :quad_pay_display_widget_at_product_page,
           :quad_pay_display_widget_at_cart_page,
+          :quad_pay_display_widget_at_checkout_process,
           :quad_pay_test_mode
         ]
       end

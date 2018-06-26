@@ -23,7 +23,7 @@ Spree::OrdersController.class_eval do
   end
 
   def quadpay_cancel
-    flash[:error] = Spree.t(:quadpay_payment_cancelled)
+    flash[:notice] = Spree.t(:quadpay_payment_cancelled)
     return go_to_order_page
   end
 
@@ -55,7 +55,7 @@ Spree::OrdersController.class_eval do
       end
 
       return if @quadpay_order && @quadpay_order.code == 200 # keep processing if request success
-      flash[:error] = Spree.t(:quadpay_payment_invalid)
+      flash[:notice] = Spree.t(:quadpay_payment_cancelled)
       go_to_order_page
     end
 end
