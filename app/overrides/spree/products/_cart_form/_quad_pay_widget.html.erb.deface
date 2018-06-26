@@ -1,6 +1,4 @@
 <!-- insert_after '.lead.price.selling' -->
-<% if current_order %>
-  <div class="product-quad-pay-widget">
-    <%= quad_pay_widget('product', @product.price) %>
-  </div>
-<% end %>
+<div class="product-quad-pay-widget">
+  <%= quad_pay_widget('product', @product.price) %>
+</div>

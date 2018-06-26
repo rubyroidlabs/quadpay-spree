@@ -3,8 +3,18 @@ module Spree
     def quad_pay_widget(type, amount)
       min_amount = Spree::Config.quad_pay_min_amount.to_f
       max_amount = Spree::Config.quad_pay_max_amount.to_f
-      return unless current_order
-      return if current_order.total.to_f < min_amount || max_amount < current_order.total.to_f
+      order_total = current_order.total.to_f rescue 0
+
+      # Logic show/hide widget
+      # Cart page the logic should be: "IF (cart.total_price > min_order_total)
+      #   THEN show_widget"
+      # Product page the logic should be: "IF (product.price > min_order_total)
+      #   OR (cart.total_price > min_order_total) THEN show_widget"
+      condition_on_cart = min_amount < order_total && order_total < max_amount
+      condition_on_amount = min_amount < amount && amount < max_amount
+      return if %w(cart checkout).include?(type) && !condition_on_cart
+      return if type == 'product' && !condition_on_amount && !condition_on_cart
+
       if qpm = Spree::BillingIntegration::QuadPayCheckout.available_on_front_end.active.first
         display_widget =
           case type
