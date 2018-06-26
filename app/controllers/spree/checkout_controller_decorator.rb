@@ -22,8 +22,8 @@ Spree::CheckoutController.class_eval do
             render :edit
           end
         else
-          redirect_to edit_order_checkout_url(@order, state: 'payment'),
-                      notice: Spree.t(:quad_pay_checkout_error)
+          flash[:error] = Spree.t(:quad_pay_checkout_error)
+          redirect_to checkout_state_path('payment')
         end
       end
     end

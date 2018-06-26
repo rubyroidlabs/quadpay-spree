@@ -48,8 +48,7 @@ class Spree::BillingIntegration::QuadPayCheckout < Spree::BillingIntegration
       ab_rsp =
         ActiveMerchant::Billing::Response.new(
           resp.code == 200,
-          { message: resp['body'] },
-          { 'message': resp['body']['msg'] },
+          { message: resp['body']['msg'] },
           authorization: refund_id
         )
 
@@ -166,5 +165,3 @@ class Spree::BillingIntegration::QuadPayCheckout < Spree::BillingIntegration
         )
     end
 end
-
-

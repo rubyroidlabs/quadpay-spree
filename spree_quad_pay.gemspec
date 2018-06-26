@@ -30,4 +30,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'whenever'
   s.add_development_dependency 'webmock'
+  s.add_development_dependency 'rspec-activemodel-mocks'
 end

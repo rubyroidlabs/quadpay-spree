@@ -10,14 +10,14 @@ Spree::OrdersController.class_eval do
       if @order.completed?
         @current_order = nil
         flash['order_completed'] = true
-        flash[:notice] = "#{Spree.t(:quadpay_payment_success)}. #{Spree.t(:order_processed_successfully)}"
+        flash[:notice] = "#{Spree.t(:quadpay_payment_success)} #{Spree.t(:order_processed_successfully)}"
         return go_to_order_page
       else
-        flash[:error] = Spree.t(:quadpay_payment_fail, order: @order.number)
-        redirect_to checkout_state_path(@order.state)
+        flash[:error] = Spree.t(:quadpay_payment_fail, number: @order.number)
+        return redirect_to checkout_state_path(@order.state)
       end
     else
-      flash[:error] = Spree.t(:quadpay_payment_fail, order: @order.number)
+      flash[:error] = Spree.t(:quadpay_payment_fail, number: @order.number)
     end
     return go_to_order_page
   end
@@ -53,6 +53,7 @@ Spree::OrdersController.class_eval do
           )
         end
       end
+
       return if @quadpay_order && @quadpay_order.code == 200 # keep processing if request success
       flash[:error] = Spree.t(:quadpay_payment_invalid)
       go_to_order_page
