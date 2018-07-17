@@ -1,4 +1,4 @@
 <!-- insert_bottom '#checkout-summary' -->
 <% if current_order %>
-  <%= quad_pay_widget('checkout', current_order.total) %>
+  <%= quadpay_cart_widget %>
 <% end %>
