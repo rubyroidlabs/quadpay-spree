@@ -69,7 +69,6 @@ module Spree
             #{body}
             with
             <img id='quadPayCalculatorWidgetLogo' src='https://assets.quadpay.com/assets/images/quadpay-logo-actually-black-tight-200.png' style='width: 90px;'>
-            <div id=''
           </div>
           <div id="quadPayCalculatorWidgetLearn" style="font-size: smaller; text-align: right; cursor: pointer; margin-top: -4px; margin-right: 2px;">
             <script async src='#{widget_url}' type='application/javascript'></script>
