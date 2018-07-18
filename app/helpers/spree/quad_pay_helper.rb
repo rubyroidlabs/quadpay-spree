@@ -63,15 +63,16 @@ module Spree
 
       widget_html = <<-HTML
         <!-- QuadPay Product Page Widget START -->
-        <div id='quadPayCalculatorWidget'>
-          <p id='quadPayCalculatorWidgetText'>
+        <div id="quadPayCalculatorWidget">
+          <div id="quadPayCalculatorWidgetText" style="margin-top: 2px; display: inline-block;">
             or 4 Interest-Free Payments
             #{body}
             with
-            <img id='quadPayCalculatorWidgetLogo' src='https://assets.quadpay.com/assets/images/quadpay-logo-actually-black-tight-200.png' style='width: 90px;'>
+            <img src='https://assets.quadpay.com/assets/images/quadpay-logo-actually-black-tight-200.png' style='width: 90px;'>
           </div>
           <div id="quadPayCalculatorWidgetLearn" style="font-size: smaller; text-align: right; cursor: pointer; margin-top: -4px; margin-right: 2px;">
             <script async src='#{widget_url}' type='application/javascript'></script>
+          </div>
           </div>
         </div>
         <!-- QuadPay Product Page Widget END -->
@@ -81,7 +82,7 @@ module Spree
     end
 
     def quadpay_widget_url(min:, max:, amount:)
-      "#{QUADPAY_WIDGET_URL_BASE}#{Spree::Config.quad_pay_merchant_name}/quadpay-widget-0.2.0.js?type=calculator&min=#{min}&max=#{max}&amount=#{amount}"
+      "#{QUADPAY_WIDGET_URL_BASE}/#{Spree::Config.quad_pay_merchant_name}/quadpay-widget-0.2.0.js?type=calculator&min=#{min}&max=#{max}&amount=#{amount}"
     end
   end
 end
