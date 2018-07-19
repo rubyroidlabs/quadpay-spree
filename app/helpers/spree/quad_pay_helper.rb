@@ -73,7 +73,6 @@ module Spree
           <div id="quadPayCalculatorWidgetLearn" style="font-size: smaller; text-align: right; cursor: pointer; margin-top: -4px; margin-right: 2px;">
             <script async src='#{widget_url}' type='application/javascript'></script>
           </div>
-          </div>
         </div>
         <!-- QuadPay Product Page Widget END -->
       HTML
