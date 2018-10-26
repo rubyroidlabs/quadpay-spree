@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Quadpay Global setting' do
+describe 'QuadPay Global setting' do
   context 'all info setting up in Spree::Config' do
     before do
       Spree::Config.quad_pay_site_url = 'quad_pay_site_url'
@@ -29,4 +29,3 @@ describe 'Quadpay Global setting' do
     end
   end
 end
-

@@ -2,21 +2,22 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_quad_pay'
-  s.version     = '3.3.4'
+  s.version     = '3.3.5'
   s.summary     = 'Add gem summary here'
   s.description = 'Add (optional) gem description here'
   s.required_ruby_version = '>= 2.1.0'
 
-  s.author    = 'Nspired Tech'
-  s.email     = 'admin@nspired-tech.com'
-  # s.homepage  = 'http://www.spreecommerce.com'
+  s.author    = 'QuadPay'
+  s.email     = 'support@quadpay.com'
+  s.homepage  = 'https://www.quadpay.com'
   s.license = 'BSD-3'
 
   # s.files       = `git ls-files`.split("\n").reject { |f| f.match(/^spec/) && !f.match(/^spec\/fixtures/) }
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'spree_core', '~> 3.3.0'
+  spree_version = '>= 3.2.0', '< 4.0'
+  s.add_dependency 'spree_core', spree_version
 
   s.add_development_dependency 'capybara', '~> 2.6'
   s.add_development_dependency 'coffee-rails'

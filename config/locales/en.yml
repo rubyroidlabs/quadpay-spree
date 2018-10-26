@@ -10,7 +10,7 @@ en:
     quad_pay_display_widget_at_product_page: Display Widget At Product Page
     quad_pay_display_widget_at_cart_page: Display Widget At Cart Page
     quad_pay_display_widget_at_checkout_process: Display Widget At Checkout Process
-    quad_pay_settings: Quad Pay Settings
+    quad_pay_settings: QuadPay Settings
     quad_pay_checkout_error: Checkout with QuadPay payment error. Please try again.
     quadpay_payment_cancelled: QuadPay checkout cancelled.
     quadpay_payment_invalid: QuadPay checkout cancelled.
