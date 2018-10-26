@@ -1,10 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'spree', '~> 3.3.0'
-gem 'spree_gateway', '~> 3.3'
+gem 'spree', github: 'spree/spree', branch: 'master'
+gem 'spree_gateway', github: 'spree/spree_gateway', branch: 'master'
 
-group :test do
-  gem 'pry-rails'
-end
+gem 'rails-controller-testing'
 
 gemspec

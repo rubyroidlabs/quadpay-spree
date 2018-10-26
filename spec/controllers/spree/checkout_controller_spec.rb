@@ -32,7 +32,7 @@ RSpec.describe Spree::CheckoutController, type: :controller do
       }}
   end
 
-  context 'Process Quad Pay payment method' do
+  context 'Process QuadPay payment method' do
     before do
       expect(order.state).to eq 'payment'
       allow(order).to receive_messages user: user
@@ -45,7 +45,7 @@ RSpec.describe Spree::CheckoutController, type: :controller do
     end
 
     context 'not processing' do
-      it 'when payment method selected is not Quad Pay' do
+      it 'when payment method selected is not QuadPay' do
         payment_method = FactoryBot.create(:simple_credit_card_payment_method)
         spree_put :update, state: 'payment',
           order: {
