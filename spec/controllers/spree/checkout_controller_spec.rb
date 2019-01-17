@@ -70,7 +70,7 @@ RSpec.describe Spree::CheckoutController, type: :controller do
 
         it 'redirect to QuadPay Site' do
           spree_put :update, @quad_pay_payment_params
-          expect(response).to redirect_to 'https://checkout-ci.quadpay.com/checkout?token=qp_token'
+          expect(response).to redirect_to 'https://checkout-ut.quadpay.com/checkout?token=qp_token'
         end
       end
 

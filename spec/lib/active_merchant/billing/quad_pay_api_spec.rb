@@ -14,7 +14,7 @@ describe ActiveMerchant::Billing::QuadPayApi do
         expect(@quadpay_api.auth_audience).to eq 'https://auth-dev.quadpay.com'
       end
       it 'base_url' do
-        expect(@quadpay_api.base_url).to eq 'https://api-ci.quadpay.com'
+        expect(@quadpay_api.base_url).to eq 'https://api-ut.quadpay.com'
       end
     end
 
@@ -33,8 +33,5 @@ describe ActiveMerchant::Billing::QuadPayApi do
         expect(@quadpay_api.base_url).to eq 'https://api.quadpay.com'
       end
     end
-  end
-
-  describe do
   end
 end
