@@ -10,7 +10,7 @@ module QuadPayResponse
     {
       "token": "qp_token",
       "expiryDateTime": "2018-05-31T04:49:23.4122937Z",
-      "redirectUrl": "https://checkout-ci.quadpay.com/checkout?token=qp_token",
+      "redirectUrl": "https://checkout-ut.quadpay.com/checkout?token=qp_token",
       "orderId": "qp_order_id"
     }
   end
