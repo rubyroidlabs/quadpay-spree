@@ -83,6 +83,8 @@ class Spree::BillingIntegration::QuadPayCheckout < Spree::BillingIntegration
     true
   end
 
+  # NOTE: Add phone to params via order.phone field.
+  # See line 96.
   def build_order_params(order)
     billing_address = order.billing_address
     shipping_address = order.shipping_address
@@ -91,7 +93,7 @@ class Spree::BillingIntegration::QuadPayCheckout < Spree::BillingIntegration
       'description': "Order ##{order.number}",
       'amount': number_to_currency(order.total.to_f, unit: ''),
       'consumer': {
-        'phoneNumber': billing_address.phone,
+        'phoneNumber': order.phone,
         'givenNames': billing_address.first_name,
         'surname': billing_address.last_name,
         'email': order.email

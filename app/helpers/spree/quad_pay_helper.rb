@@ -2,8 +2,10 @@ module Spree
   module QuadPayHelper
     QUADPAY_WIDGET_URL_BASE = "https://widgets.quadpay.com"
 
+    # NOTE: customize line 8 for Spree 3.0.0-stable
+    # Spree::BillingIntegration::QuadPayCheckout.available_on_front_end.exists?(active: true)
     def quadpay_active_on_front_end?
-      Spree::BillingIntegration::QuadPayCheckout.available_on_front_end.exists?(active: true)
+      Spree::BillingIntegration::QuadPayCheckout.exists?(active: true)
     end
 
     def display_quadpay_widget_on_product_page?

@@ -22,10 +22,12 @@ module ActiveMerchant
           end
       end
 
+      # NOTE: Fixed depreceted base url for test mode.
+      # See line 30
       def auth_audience
         @auth_audience ||=
           if @test_mode
-            'https://auth-dev.quadpay.com'
+            'https://api-ut.quadpay.com'
           else
             'https://auth.quadpay.com'
           end
