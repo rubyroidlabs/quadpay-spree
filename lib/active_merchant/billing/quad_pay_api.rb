@@ -27,7 +27,7 @@ module ActiveMerchant
       def auth_audience
         @auth_audience ||=
           if @test_mode
-            'https://api-ut.quadpay.com'
+            'https://auth-dev.quadpay.com'
           else
             'https://auth.quadpay.com'
           end
@@ -36,7 +36,7 @@ module ActiveMerchant
       def base_url
         @base_url ||=
           if @test_mode
-            'https://api-ci.quadpay.com'
+            'https://api-ut.quadpay.com'
           else
             'https://api.quadpay.com'
           end
