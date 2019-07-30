@@ -8,7 +8,7 @@ SpreeQuadPay
 1. Add this extension to your Gemfile with this line:
 
     ```
-    gem 'spree_quad_pay', github: 'quadpay/quadpay-spree', branch: '3-3-stable'`
+    gem 'spree_quad_pay', github: 'quadpay/quadpay-spree', branch: '3-3-stable'
     ```
 
     **The `branch` option is important: it must match the version of Spree you're using.**
