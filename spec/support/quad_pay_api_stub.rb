@@ -30,7 +30,7 @@ module QuadPayApiStub
 
   def stub_send_request(type = 'get', path = '', status = 200, body = {})
     stub_access_token
-    full_url = "https://api-ci.quadpay.com/#{path}"
+    full_url = "https://api-ut.quadpay.com/#{path}"
     response = {
       status: status,
       body: body.to_json
@@ -43,7 +43,7 @@ module QuadPayApiStub
           'Accept-Encoding': 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
           'Authorization': 'Bearer qp_token',
           'Content-Type': 'application/json',
-          'Host': 'api-ci.quadpay.com',
+          'Host': 'api-ut.quadpay.com',
           'User-Agent': 'Ruby'
         }
       ).to_return(response)

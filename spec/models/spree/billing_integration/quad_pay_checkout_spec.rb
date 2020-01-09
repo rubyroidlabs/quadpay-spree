@@ -34,7 +34,7 @@ describe Spree::BillingIntegration::QuadPayCheckout, type: :model do
     resp = @qp_payment_method.create_order(order)
     expect(resp['token']).to eq 'qp_token'
     expect(resp['orderId']).to eq 'qp_order_id'
-    expect(resp['redirectUrl']).to eq 'https://checkout-ci.quadpay.com/checkout?token=qp_token'
+    expect(resp['redirectUrl']).to eq 'https://checkout-ut.quadpay.com/checkout?token=qp_token'
   end
 
   it '#find_order' do
