@@ -83,6 +83,9 @@ class Spree::BillingIntegration::QuadPayCheckout < Spree::BillingIntegration
     true
   end
 
+  # NOTE: Add phone to params via order.phone field.
+  # Add Callback url. See line
+  # See line 97.
   def build_order_params(order)
     billing_address = order.billing_address
     shipping_address = order.shipping_address
@@ -91,7 +94,7 @@ class Spree::BillingIntegration::QuadPayCheckout < Spree::BillingIntegration
       'description': "Order ##{order.number}",
       'amount': number_to_currency(order.total.to_f, unit: ''),
       'consumer': {
-        'phoneNumber': billing_address.phone,
+        'phoneNumber': order.phone,
         'givenNames': billing_address.first_name,
         'surname': billing_address.last_name,
         'email': order.email
@@ -113,7 +116,8 @@ class Spree::BillingIntegration::QuadPayCheckout < Spree::BillingIntegration
       'items': line_item_as_json(order),
       'merchant': {
         'redirectConfirmUrl': "#{site_url}/orders/quadpay_confirm",
-        'redirectCancelUrl': "#{site_url}/orders/quadpay_cancel"
+        'redirectCancelUrl': "#{site_url}/orders/quadpay_cancel",
+        'statusCallbackUrl': "#{site_url}/orders/quadpay_callback"
       },
       'merchantReference': order.number,
       'taxAmount': number_to_currency(order.tax_total, unit: ''),

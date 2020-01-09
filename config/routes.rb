@@ -6,8 +6,9 @@ Spree::Core::Engine.routes.draw do
       get :quadpay_confirm
     end
   end
-
-  namespace :admin, path: Spree.admin_path do
+  # NOTE: Make routes working for our project
+  # Removed path parameter for namespace below.
+  namespace :admin do
     resources :quad_pay_settings, :only => [] do
       collection do
         get :edit
