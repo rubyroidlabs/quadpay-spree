@@ -14,7 +14,7 @@ class Spree::BillingIntegration::QuadPayCheckout < Spree::BillingIntegration
   end
 
   def find_order(token)
-    quadpay_api.send_request('get', "order?token=#{token}", {})
+    quadpay_api.send_request('get', "order/#{token}", {})
   end
 
   def purchased
