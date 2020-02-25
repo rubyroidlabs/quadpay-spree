@@ -1,33 +1,39 @@
-Spree::OrdersController.class_eval do
-  before_action :load_quaypay_payment, only: [:quadpay_confirm, :quadpay_cancel]
+# frozen_string_literal: true
 
-  def quadpay_confirm
-    if @quadpay_order.body['orderStatus'] == 'Approved'
-      @payment.complete!
-      # Force complete order
-      while @order.next; end
+module Spree
+  module OrdersControllerDecorator
+    def self.prepended(base)
+      base.before_action :load_quaypay_payment, only: %i[quadpay_confirm quadpay_cancel]
+    end
 
-      if @order.completed?
-        @current_order = nil
-        flash['order_completed'] = true
-        flash[:notice] = "#{Spree.t(:quadpay_payment_success)} #{Spree.t(:order_processed_successfully)}"
-        return go_to_order_page
+    def quadpay_confirm
+      if @quadpay_order.body['orderStatus'] == 'Approved'
+        @payment.complete!
+        # Force complete order
+        while @order.next; end
+
+        if @order.completed?
+          @current_order = nil
+          flash['order_completed'] = true
+          flash[:notice] = "#{Spree.t(:quadpay_payment_success)} #{Spree.t(:order_processed_successfully)}"
+          return go_to_order_page
+        else
+          flash[:error] = Spree.t(:quadpay_payment_fail, number: @order.number)
+          return redirect_to checkout_state_path(@order.state)
+        end
       else
         flash[:error] = Spree.t(:quadpay_payment_fail, number: @order.number)
-        return redirect_to checkout_state_path(@order.state)
       end
-    else
-      flash[:error] = Spree.t(:quadpay_payment_fail, number: @order.number)
+      go_to_order_page
     end
-    return go_to_order_page
-  end
 
-  def quadpay_cancel
-    flash[:notice] = Spree.t(:quadpay_payment_cancelled)
-    return go_to_order_page
-  end
+    def quadpay_cancel
+      flash[:notice] = Spree.t(:quadpay_payment_cancelled)
+      go_to_order_page
+    end
 
-  private
+    private
+
     def go_to_order_page
       # Because order was completed, so customer must be redirect to order's show page or
       # if order not found we will redirect customer to root page
@@ -49,13 +55,18 @@ Spree::OrdersController.class_eval do
           @payment.log_entries.create(
             details: ActiveMerchant::Billing::Response.new(
               @quadpay_order.code == 200,
-              @quadpay_order.body).to_yaml
+              @quadpay_order.body
+            ).to_yaml
           )
         end
       end
 
       return if @quadpay_order && @quadpay_order.code == 200 # keep processing if request success
+
       flash[:notice] = Spree.t(:quadpay_payment_cancelled)
       go_to_order_page
     end
+  end
 end
+
+Spree::OrdersController.prepend(Spree::OrdersControllerDecorator)
