@@ -1,12 +1,20 @@
-Spree::CheckoutController.class_eval do
-  before_action :confirm_quad_pay, only: [:update]
+# frozen_string_literal: true
 
-  private
+module Spree
+  module CheckoutControllerDecorator
+    def self.prepended(base)
+      base.before_action :confirm_quad_pay, only: [:update]
+    end
+
+    private
+
     def confirm_quad_pay
-      return unless (params[:state] == 'payment') && params[:order] && params[:order][:payments_attributes]
+      unless (params[:state] == 'payment') && params[:order] && params[:order][:payments_attributes]
+        return
+      end
 
       payment_method = Spree::PaymentMethod.find(params[:order][:payments_attributes].first[:payment_method_id])
-      if payment_method && payment_method.kind_of?(Spree::BillingIntegration::QuadPayCheckout)
+      if payment_method&.is_a?(Spree::BillingIntegration::QuadPayCheckout)
         if qp_order = payment_method.create_order(@order)
           if @order.update_from_params(params, permitted_checkout_attributes, request.headers.env)
             @order.temporary_address = !params[:save_user_address]
@@ -27,4 +35,7 @@ Spree::CheckoutController.class_eval do
         end
       end
     end
+  end
 end
+
+Spree::CheckoutController.prepend(Spree::CheckoutControllerDecorator)
